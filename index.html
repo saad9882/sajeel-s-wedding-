@@ -204,22 +204,43 @@ section{
 }
 @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
 
-/* Bloom */
-#bloom{
-  position:absolute;inset:0;z-index:10;
-  pointer-events:none;opacity:0;
-  background:radial-gradient(ellipse 200% 200% at 50% 50%,
-    rgba(255,248,210,1) 0%,rgba(245,230,176,1) 20%,
-    rgba(201,168,76,1) 50%,rgba(26,42,108,1) 80%,rgba(6,9,30,1) 100%);
+/* --- Standard Elegant Fade Transition --- */
+#bloom {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none; /* Lets clicks pass through when hidden */
+  opacity: 0;
+  
+  /* A solid, deep navy blue (or use #000000 for pure black) */
+  background-color: #0a1930; 
 }
-#bloom.expand{animation:bloomExpand 0.75s var(--ease-bloom) forwards;}
-@keyframes bloomExpand{
-  0%{opacity:0;background:radial-gradient(ellipse 0% 0% at 50% 50%,rgba(255,240,180,1) 0%,rgba(201,168,76,0.9) 30%,rgba(26,42,108,0.5) 65%,rgba(6,9,30,0.2) 100%);}
-  25%{opacity:1;background:radial-gradient(ellipse 50% 50% at 50% 50%,rgba(255,248,210,1) 0%,rgba(201,168,76,1) 40%,rgba(26,42,108,0.7) 75%,rgba(6,9,30,0.3) 100%);}
-  100%{opacity:1;background:radial-gradient(ellipse 200% 200% at 50% 50%,rgba(255,248,210,1) 0%,rgba(245,230,176,1) 20%,rgba(201,168,76,1) 50%,rgba(26,42,108,1) 80%,rgba(6,9,30,1) 100%);}
+
+/* Phase 1: Fading In (Covering the screen) */
+#bloom.expand {
+  /* Using standard ease-in-out for a natural feel */
+  animation: simpleFadeIn 0.6s ease-in-out forwards;
+  pointer-events: all; /* Blocks accidental clicks while screen is covered */
 }
-#bloom.fade{opacity:1;animation:bloomFade 1.1s var(--ease-lux) forwards;}
-@keyframes bloomFade{from{opacity:1;}to{opacity:0;}}
+
+@keyframes simpleFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Phase 2: Fading Out (Revealing the new content) */
+#bloom.fade {
+  opacity: 1;
+  animation: simpleFadeOut 0.8s ease-in-out forwards;
+}
+
+@keyframes simpleFadeOut {
+  from { opacity: 1; }
+  to { 
+    opacity: 0; 
+    visibility: hidden; /* Ensures it is completely removed from view */
+  }
+}
 
 /* Splash corners */
 .sp-corner{
@@ -845,8 +866,7 @@ footer::before{
   </div>
 </section>
 
-<!-- ── 3. EVENT DETAILS ──────────────────────────────────────── -->
-<section id="details">
+<<section id="details">
   <div class="reveal d1">
     <div class="ornament-row">
       <div class="ornament-line"></div>
@@ -860,7 +880,6 @@ footer::before{
   </div>
 
   <div class="details-cards">
-    <!-- Date card -->
     <div class="detail-card reveal d2">
       <div class="detail-icon">
         <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -876,7 +895,6 @@ footer::before{
       <p class="detail-card-sub">Saturday</p>
     </div>
 
-    <!-- Time card -->
     <div class="detail-card reveal d3">
       <div class="detail-icon">
         <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -895,7 +913,6 @@ footer::before{
       <p class="detail-card-sub">Doors open at dusk</p>
     </div>
 
-    <!-- Venue card -->
     <div class="detail-card reveal d4">
       <div class="detail-icon">
         <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -908,19 +925,8 @@ footer::before{
       <p class="detail-card-sub">Multan Cantonment<br/>Multan, Pakistan</p>
     </div>
 
-    <!-- Dress code card -->
-    <div class="detail-card reveal d5">
-      <div class="detail-icon">
-        <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M16 6 L10 18 L18 18 L18 42 L30 42 L30 18 L38 18 L32 6" stroke="#c9a84c" stroke-width="1.2" stroke-linejoin="round"/>
-          <path d="M16 6 Q24 12 32 6" stroke="#c9a84c" stroke-width="1.2"/>
-          <circle cx="24" cy="10" r="2.5" stroke="#c9a84c" stroke-width="1"/>
-        </svg>
-      </div>
-      <p class="detail-card-label">Dress Code</p>
-      <p class="detail-card-value">Formal<br/>Attire</p>
-      <p class="detail-card-sub">Black Tie / Traditional<br/>Pakistani Formal</p>
-    </div>
+    <div class="detail-card" style="visibility: hidden; pointer-events: none;"></div>
+    
   </div>
 </section>
 
@@ -960,7 +966,7 @@ footer::before{
     </div>
   </div>
 
-  <p class="countdown-caption reveal d3">Until we say <em style="color:var(--gold-light)">I do</em></p>
+
 </section>
 
 <!-- ── 5. VENUE ─────────────────────────────────────────────── -->

@@ -774,7 +774,9 @@ footer::before{
 <div id="splash">
   <div id="loader"><div class="loader-ring"></div></div>
 
- <video id="envVideo" muted playsinline preload="auto" src="./splash.mp4"></video>
+<video id="envVideo" muted playsinline preload="auto">
+  <source src="splash.mp4" type="video/mp4">
+</video>
 <div id="bloom"></div>
   <div id="bloom"></div>
   <div class="splash-frame"></div>
@@ -1196,6 +1198,7 @@ function handleRSVP(e){
 </script>
 </body>
 </html>
+
 
 
 
